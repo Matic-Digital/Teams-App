@@ -9,7 +9,7 @@ import type { Talent, Profile } from '@/types';
 import Image from 'next/image';
 import { Box, Container } from '@/components/global/matic-ds';
 import { ErrorBoundary } from '@/components/global/ErrorBoundary';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 

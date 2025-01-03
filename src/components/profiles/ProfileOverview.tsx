@@ -62,18 +62,19 @@ export default function ProfileOverview({ name, tags, tier, type, availability, 
     return (
         <Container>
             <Box direction="col" className="px-4 py-6 md:p-8 shadow-lg rounded-lg bg-white">
-                <Box gap={6} className="items-center justify-between border-b border-[#a4a7ae] pb-2">
+                <Box gap={6} className="items-center justify-between border-b border-[#a4a7ae] pb-4">
                     <h1 className="flex gap-2">
                         Meet
                         <span className={`
-                            ${type === 'Design' ? 'text-[#7756C9]' : ''}
-                            ${type === 'Engineering' ? 'text-[#157DEF]' : ''}
+                            ${type === 'Design' ? 'text-designpurple' : ''}
+                            ${type === 'Engineering' ? 'text-engblue' : ''}
+                            ${type === 'Management' ? 'text-manpink' : ''}
 
                         `}>
                             {name.split(' ')[0]}
                         </span>
                     </h1>
-                    <Box direction="row" gap={2} className="flex-grow hidden md:flex">
+                    <Box direction="row" gap={2} wrap={true} className="flex-grow hidden md:flex">
                         {tags?.map((tag: string, index: number) => (
                             <p
                                 key={index}
@@ -83,14 +84,24 @@ export default function ProfileOverview({ name, tags, tier, type, availability, 
                             </p>
                         ))}
                     </Box>
-                    <p className="">
-                        Available <span className="font-semibold">
-                            {availability ? new Date(availability).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Not specified'}
+                    <p className="flex items-center gap-2">
+                        <span className={`w-2 h-2 rounded-full ${
+                            availability ? (
+                                new Date(availability) <= new Date() ? 
+                                'bg-green-500' : 
+                                'bg-yellow-500'
+                            ) : 'bg-red-500'
+                        }`} />
+                        <span className="font-semibold w-[6rem]">
+                            {availability ? (
+                                new Date(availability) <= new Date() ? 'Available Now' : 
+                                new Date(availability).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                            ) : 'Not Available'}
                         </span>
                     </p>
                 </Box>
-                <Box className='relative my-6 flex-col md:flex-row' gap={4}>
-                    <Box gap={4} className="">
+                <Box className='relative pb-10 mt-4 flex-col md:flex-row' gap={12}>
+                    <Box gap={4} className="mt-4">
                         <Image
                             src={headshot}
                             alt={name}
@@ -99,9 +110,10 @@ export default function ProfileOverview({ name, tags, tier, type, availability, 
                             className="w-[175px] md:min-w-[211px] h-[200px] md:h-[241px] rounded-[0.8rem] z-10"
                         />
                         <div className={`
-                        w-[175px] md:w-[211px] h-[200px] md:h-[241px] rounded-[0.8rem] absolute top-1.5 left-1.5
-                        ${type === 'Design' ? 'bg-[#7756C9]' : ''}
-                        ${type === 'Engineering' ? 'bg-[#157DEF]' : ''}
+                        w-[175px] md:w-[211px] h-[200px] md:h-[241px] rounded-[0.8rem] absolute top-6 left-1.5
+                        ${type === 'Design' ? 'bg-designpurple' : ''}
+                        ${type === 'Engineering' ? 'bg-engblue' : ''}
+                        ${type === 'Management' ? 'bg-manpink' : ''}
                     `}>
                         </div>
                         <Box direction="col" gap={2} className="flex-grow flex md:hidden">

@@ -2,17 +2,14 @@
 import type { Metadata } from 'next';
 
 // API and types
-import { getTalent, getEducation, getAwards, getLanguages, getProfile } from '@/lib/api';
+import { getTalent, getProfile } from '@/lib/api';
 import { ResourceNotFoundError } from '@/lib/errors';
-import type { Language } from '@/types/contentful';
 
 // Components
 import Image from 'next/image';
 import Link from 'next/link';
-import { Box, Container, Main, Section } from '@/components/global/matic-ds';
+import { Box, Container, Section } from '@/components/global/matic-ds';
 import { ErrorBoundary } from '@/components/global/ErrorBoundary';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Talent',
@@ -45,44 +42,35 @@ export default async function TalentPage({ params }: PageProps) {
             }),
         );
 
-        let languages: Language[] = [];
-        try {
-            languages = await getLanguages(talent.sys.id);
-        } catch (error) {
-            console.error('Failed to fetch languages:', error);
-        }
-
         return (
-            <Main className="h-screen">
-                <Section>
-                    <ErrorBoundary>
-                        <Container>
-                            <Box gap={12}>
-                                <Image
-                                    src={talent.headshot.url}
-                                    alt={`Cover image for ${talent.name}`}
-                                    height={487}
-                                    width={487}
-                                    className="aspect-square object-cover rounded-lg shadow-lg"
-                                    priority={false}
-                                />
-                                <Box direction="col" gap={4} className="">
-                                    <h4 className="">{talent.primaryTitle}</h4>
-                                    <h1 className="font-semibold">{talent.name}</h1>
-                                </Box>
+            <Section>
+                <ErrorBoundary>
+                    <Container>
+                        <Box gap={12}>
+                            <Image
+                                src={talent.headshot.url}
+                                alt={`Cover image for ${talent.name}`}
+                                height={487}
+                                width={487}
+                                className="aspect-square object-cover rounded-lg shadow-lg"
+                                priority={false}
+                            />
+                            <Box direction="col" gap={4} className="">
+                                <h4 className="">{talent.primaryTitle}</h4>
+                                <h1 className="font-semibold">{talent.name}</h1>
                             </Box>
-                            {profile && (
-                                <Link href={`/talent/${talent.slug}/profile/${profile.slug}`} className="">
-                                    <Box direction="col" gap={4} className="">
-                                        <h4 className="">{profile.profileType}</h4>
-                                        <h3 className="">{profile.role}</h3>
-                                    </Box>
-                                </Link>
-                            )}
-                        </Container>
-                    </ErrorBoundary>
-                </Section>
-            </Main>
+                        </Box>
+                        {profile && (
+                            <Link href={`/talent/${talent.slug}/profile/${profile.slug}`} className="">
+                                <Box direction="col" gap={4} className="">
+                                    <h4 className="">{profile.profileType}</h4>
+                                    <h3 className="">{profile.role}</h3>
+                                </Box>
+                            </Link>
+                        )}
+                    </Container>
+                </ErrorBoundary>
+            </Section>
         );
     } catch (error) {
         console.error('Error in TalentPage:', error);

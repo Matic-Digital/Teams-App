@@ -40,7 +40,7 @@ export default function SimplifyCTA() {
                             </Box>
                         </Box>
                     </Box>
-                    <Button variant='green' className='mx-auto'>Get Started</Button>
+                    <Button className='mx-auto'>Get Started</Button>
                 </Box>
             </Container>
         </Section>

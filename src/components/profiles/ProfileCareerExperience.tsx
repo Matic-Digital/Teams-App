@@ -1,6 +1,6 @@
 import type { Awards, Education, Language, ProfessionalBackground } from "@/types";
 import { Box, Container, Prose } from "../global/matic-ds";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 
@@ -39,13 +39,14 @@ const options = {
 
 export default function ProfileCareerExperience({ type, roles, markets, sectors, skills, tools, education, awards, languages, location }: ProfileCareerExperienceProps) {
     return (
-        <Container id='experience' className="overflow-clip">
+        <Container id='experience' className="relative">
             <Box direction="col" className="p-4 md:p-8 shadow-lg rounded-lg bg-white">
                 <h1 className="flex gap-2">
                     Career
                     <span className={` 
-                ${type === 'Design' ? 'text-[#7756C9]' : ''} 
-                ${type === 'Engineering' ? 'text-[#157DEF]' : ''} 
+                ${type === 'Design' ? 'text-designpurple' : ''} 
+                ${type === 'Engineering' ? 'text-engblue' : ''} 
+                ${type === 'Management' ? 'text-manpink' : ''}
             `}>
                         Experience
                     </span>
@@ -56,8 +57,9 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                         {roles.reverse().map((background, index) => (
                             <CarouselItem key={index} className={`
                     basis-4/5 md:basis-2/5 border rounded-xl px-4 py-6
-                    ${type === 'Design' ? 'bg-[#fcfaff] border-[#e9d7fe]' : ''}
-                    ${type === 'Engineering' ? 'bg-[#f5faff] border-[#c7d7fe]' : ''}
+                    ${type === 'Design' ? 'bg-designpurplebg border-designpurpleborder' : ''}
+                    ${type === 'Engineering' ? 'bg-engbluebg border-engblueborder' : ''}
+                    ${type === 'Management' ? 'bg-manpinkbg border-manpinkborder' : ''}
                 `}>
                                 <Box direction="col">
                                     <h3>{background.companyName}</h3>
@@ -68,8 +70,6 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
                 </Carousel>
                 <div className="border-b border-[#a4a7ae] mb-4 mt-2 md:mb-6 md:mt-8"></div>
                 <h6 className="mb-4">Areas of focus</h6>
@@ -94,9 +94,13 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                         <CarouselItem className="basis-1/2 md:basis-1/4">
                             <Box direction="col" gap={2}>
                                 <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Skills & Methods</p>
-                                {skills?.map((skill, index) => (
-                                    <p key={index} className='font-semibold'>{skill}</p>
-                                ))}
+                                <Box className="flex flex-wrap gap-2 max-h-[144px] overflow-y-hidden">
+                                    {skills?.map((skill, index) => (
+                                        <Box className="" key={index}>
+                                            <p className='font-semibold'>{skill}</p>
+                                        </Box>
+                                    ))}
+                                </Box>
                             </Box>
                         </CarouselItem>
                         <CarouselItem className="basis-1/2 md:basis-1/4">
@@ -113,7 +117,7 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                 <h6 className="mt-4">Education & other attributes</h6>
                 <Carousel>
                     <CarouselContent>
-                        <CarouselItem className="basis-3/4 md:basis-1/4">
+                        <CarouselItem className="basis-4/5 md:basis-1/4">
                             <Box direction="col" gap={4}>
                                 <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px] mt-4">Education</p>
                                 {education.map((edu, index) => (

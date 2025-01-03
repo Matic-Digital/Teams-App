@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getTalent, getAllProfiles } from '@/lib/api';
-import { Box, Container, Main, Section } from '@/components/global/matic-ds';
+import { Box, Container, Section } from '@/components/global/matic-ds';
 import SimplifyCTA from '@/components/profiles/SimplifyCTA';
 import { getEducation, getAwards, getLanguages, getWorkSamples, getProfessionalBackground, getTechSpecification } from '@/lib/api';
 import ProfileNav from '@/components/profiles/ProfileNav';
@@ -9,6 +9,7 @@ import ProfileNotes from '@/components/profiles/ProfileNotes';
 import ProfileWorkSamples from '@/components/profiles/ProfileWorkSamples';
 import ProfileCareerExperience from '@/components/profiles/ProfileCareerExperience';
 import EvalItem from '@/components/profiles/EvalItem';
+import { Link } from 'lucide-react';
 
 interface LocationResponse {
   address?: {
@@ -23,9 +24,13 @@ const stateAbbreviations: Record<string, string> = { 'alabama': 'AL', 'alaska': 
 const getLocationName = async (location: string): Promise<string> => {
   try {
     const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&addressdetails=1`
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&addressdetails=1`,
+      { next: { revalidate: 3600 } } // Cache for 1 hour
     );
-    const data = (await response.json()) as LocationResponse[];
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json() as LocationResponse[];
     if (data[0]?.address) {
       const { city, state, town } = data[0].address;
       const cityName = city ?? town;
@@ -83,7 +88,7 @@ export default async function ProfilePage({ params }: Props) {
     }));
 
     return (
-      <Main className="mt-0">
+      <Box direction="col" className="mt-0">
         <Section className="flex flex-col gap-4">
           <ProfileNav
             profile={{
@@ -94,7 +99,9 @@ export default async function ProfilePage({ params }: Props) {
               role: profile.role ?? '',
               focus: profile.focus ?? '',
               level: profile.level ?? '',
-              experience: profile.experience ?? 0
+              experience: profile.experience ?? 0,
+              hasSamples: workSamples.length > 0,
+              hasEval: techSpecification.length > 0
             }}
           />
           <ProfileOverview
@@ -136,7 +143,9 @@ export default async function ProfilePage({ params }: Props) {
                           Evaluation
                         </span>
                       </h1>
-                      <h6 className="font-bold">{tech.repo}</h6>
+                      <Link href={tech.repo} target="_blank" className="text-foreground font-bold hover:underline flex gap-2">
+                          View Repo
+                      </Link>
                     </Box>
                     <Box direction="col" gap={2} className="my-4">
                       <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Blended Score</p>
@@ -177,7 +186,7 @@ export default async function ProfilePage({ params }: Props) {
           />
         </Section>
         <SimplifyCTA />
-      </Main>
+      </Box>
     )
   } catch (error) {
     console.error('Error fetching profile:', error instanceof Error ? error.message : 'Unknown error');

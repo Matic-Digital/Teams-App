@@ -333,6 +333,19 @@ export default {
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        maticgreen: 'hsl(var(--matic-green))',
+        maticgreenbg: 'hsl(var(--matic-green-bg))',
+        maticgreenborder: 'hsl(var(--matic-green-border))',
+        designpurplebg: 'hsl(var(--design-bg))',
+        designpurple: 'hsl(var(--design-purple))',
+        designpurpleborder: 'hsl(var(--design-border))',
+        designbg: 'hsl(var(--design-bg))',
+        engblue: 'hsl(var(--eng-blue))',
+        engbluebg: 'hsl(var(--eng-bg))',
+        engblueborder: 'hsl(var(--eng-border))',
+        manpink: 'hsl(var(--man-pink))',
+        manpinkbg: 'hsl(var(--man-bg))',
+        manpinkborder: 'hsl(var(--man-border))',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'

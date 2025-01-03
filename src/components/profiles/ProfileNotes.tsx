@@ -37,9 +37,9 @@ const options = {
 export default function ProfileNotes({ type, notes }: ProfileNotesProps) {
     return (
         <Container>
-            <Box direction={{ base: 'col', md: 'row' }} className="p-4 md:p-8 shadow-lg rounded-lg bg-white">
-                <Box direction="col" gap={4} className="p-4 w-[239px] md:min-w-[272px] max-w-[30rem] shadow-lg rounded-lg bg-[#000227] text-white items-center justify-center">
-                  <h1 className="">Next <span className={` ${type === 'Design' ? 'text-design-purple' : type === 'Engineering' ? 'text-engineering-blue' : ''} `}>Steps</span></h1>
+            <Box direction={{ base: 'col', md: 'row' }} gap={8} className="p-4 md:p-8 flex-col-reverse md:flex-row shadow-lg rounded-lg bg-white">
+                <Box direction="col" gap={{ base: 8, md: 4 }} className="p-4 md:py-10 w-full aspect-square md:aspect-auto md:w-1/3 shadow-lg rounded-lg bg-[#000227] text-white items-center justify-center">
+                  <h1 className="text-4xl">Next <span className={` ${type === 'Design' ? 'text-design-purple' : type === 'Engineering' ? 'text-engineering-blue' : ''} `}>Steps</span></h1>
                   <p className="text-white text-center">Look like a good fit? Get started by scheduling an intro meeting today.</p>
                   <Button className={`
                      text-white rounded-lg mb-2

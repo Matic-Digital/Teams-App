@@ -12,8 +12,6 @@ import { Providers } from '@/app/providers';
 import { Layout } from '@/components/global/matic-ds';
 
 import { Main } from '@/components/global/matic-ds';
-import { Header } from '@/components/global/Header';
-import { Footer } from '@/components/global/Footer';
 import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({
@@ -47,10 +45,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <Layout className={`${inter.variable}`}>
       <body className="flex min-h-screen flex-col">
         <Providers>
-          <Header />
-          <Main className="mt-0">{children}</Main>
+          <Main className="mt-0 min-h-screen">{children}</Main>
           <Toaster />
-          <Footer />
         </Providers>
       </body>
     </Layout>

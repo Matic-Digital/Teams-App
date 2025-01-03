@@ -17,7 +17,7 @@ export default function OverviewList({ role, focus, tier, level, location, color
         <Box  cols={{ sm: 2, md: 3}} className={
             `
                 rounded-lg overflow-hidden border 
-                ${color === 'Design' ? 'bg-[#fcfaff] border-designpurpleborder' : ''}
+                ${color === 'Design' ? 'bg-designpurplebg border-designpurpleborder' : ''}
                 ${color === 'Engineering' ? 'bg-engbluebg border-engblueborder' : ''}
                 ${color === 'Management' ? 'bg-manpinkbg border-manpinkborder' : ''}
             `

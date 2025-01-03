@@ -1,38 +1,25 @@
 'use client';
 // Next.js and icon imports
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu } from 'lucide-react';
-import { ErrorBoundary } from '@/components/global/ErrorBoundary';
+// import { usePathname } from 'next/navigation';
 
-import { Container, Box } from '@/components/global/matic-ds';
+import { Box } from '@/components/global/matic-ds';
 
-// Navigation menu components from shadcn
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle
-} from '@/components/ui/navigation-menu';
-
-// Sheet components for mobile menu from shadcn
-import { Sheet, SheetContent, SheetHeader, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 
 import { Logo } from '@/components/global/Logo';
 
-// Theme toggle component
-import { ThemeToggle } from '@/components/global/ThemeToggle';
+import { Button } from '../ui/button';
+
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useState } from 'react';
 
 /**
  * Navigation menu items configuration
  * Each item has a URL and display label
  */
-const menuItems = [
-  { href: '/talent', label: 'Talent' },
-  { href: '/contact', label: 'Contact' },
-  { href: '/template', label: 'Templates' }
-];
+// const menuItems = [
+//   { href: '/talent', label: 'Talent' },
+// ];
 
 /**
  * Header component with responsive navigation
@@ -43,83 +30,54 @@ const menuItems = [
  * - Consistent branding across breakpoints
  */
 export function Header() {
-  const pathname = usePathname();
+  // const pathname = usePathname();
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
 
   // Helper function to check if a path is active
-  const isActive = (href: string) => {
-    if (href === '/') {
-      return pathname === href;
-    }
-    return pathname?.startsWith(href);
-  };
+  // const isActive = (href: string) => {
+  //   if (href === '/') {
+  //     return pathname === href;
+  //   }
+  //   return pathname?.startsWith(href);
+  // };
 
   return (
-    <Container className="sticky top-0 z-50 px-0">
-      <header className="mt-0 bg-[#000227] px-6 max-md:py-1.5 lg:w-full">
-        <Box className="items-center justify-between">
-          {/* Desktop Navigation */}
+    <motion.header
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "-100%" },
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="bg-foreground fixed w-full top-0 z-50 px-8 py-4"
+    >
+      <Box className="items-center justify-between">
+        {/* Desktop Navigation */}
+        <Box className="flex items-center">
           <Logo />
-
-          <div className="hidden md:flex">
-            {/* Desktop Menu Items */}
-            <ErrorBoundary>
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menuItems.map((item) => (
-                    <NavigationMenuItem key={item.href}>
-                      <Link href={item.href} legacyBehavior passHref>
-                        <NavigationMenuLink
-                          className={navigationMenuTriggerStyle()}
-                          active={isActive(item.href)}
-                        >
-                          {item.label}
-                        </NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                  ))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </ErrorBoundary>
-          </div>
-
-          <Box gap={2}>
-            <ThemeToggle />
-
-            {/* Mobile Navigation */}
-            <div className="md:hidden">
-              {/* Hamburger Menu Sheet */}
-              <Sheet>
-                <SheetTrigger asChild>
-                  <button className="inline-flex h-10 w-10 items-center justify-center rounded-md text-sm font-medium">
-                    <Menu className="size-7" />
-                    <span className="sr-only">Toggle Menu</span>
-                  </button>
-                </SheetTrigger>
-                <SheetContent side="right">
-                  <SheetHeader>
-                    <Logo />
-                  </SheetHeader>
-                  {/* Mobile Menu Items */}
-                  <nav className="mt-8 flex flex-col space-y-4">
-                    {menuItems.map((item) => (
-                      <SheetClose key={item.href} asChild>
-                        <Link
-                          href={item.href}
-                          className={`text-lg font-medium hover:text-primary ${
-                            isActive(item.href) ? 'text-foreground' : 'text-foreground/60'
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
-                      </SheetClose>
-                    ))}
-                  </nav>
-                </SheetContent>
-              </Sheet>
-            </div>
+          <Box direction="col" gap={0} className="text-background gap-0 -ml-2">
+            <h3 className="leading-none">Matic</h3>
+            <h3 className="leading-none">Teams</h3>
           </Box>
         </Box>
-      </header>
-    </Container>
+
+        <div className="hidden md:flex">
+          {/* Desktop Menu Items */}
+          <Link href="/" className="mr-6">
+            <Button>Build your team</Button>
+          </Link>
+        </div>
+      </Box>
+    </motion.header>
   );
 }

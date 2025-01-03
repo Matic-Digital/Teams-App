@@ -10,7 +10,7 @@ export default function OverviewItem({ label, value, color }: OverviewItemProps)
     return (
         <Box direction="col" gap={0.5} className={`
             items-start border p-4 h-full justify-center flex-grow
-            ${color === 'Design' ? 'border-designpurpleborder/80' : ''}
+            ${color === 'Design' ? 'border-designpurpleborder' : ''}
             ${color === 'Engineering' ? 'border-engblueborder' : ''}
             ${color === 'Management' ? 'border-manpinkborder' : ''}
         `}>

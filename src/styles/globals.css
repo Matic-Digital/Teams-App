@@ -43,14 +43,14 @@
     --matic-green-bg: 206, 100%, 85%;
     --matic-green-border: 207, 98%, 66%;
     --design-purple: 257, 52%, 56%;
-    --design-bg: 206, 100%, 85%;
-    --design-border: 207, 98%, 66%;
+    --design-bg: 264, 100%, 99%;
+    --design-border: 268, 95%, 92%;
     --eng-blue: 211, 87%, 51%;
-    --eng-bg: 206, 100%, 85%;
-    --eng-border: 207, 98%, 66%;
+    --eng-bg: 222, 100%, 98%;
+    --eng-border: 223, 96%, 89%;
     --man-pink: 325, 73%, 51%;
     --man-bg: 323, 80%, 98%;
-    --man-border: 318, 88%, 90%;
+    --eng-light-border: 207, 98%, 66%;
 
     /* Chart color palette */
     --chart-1: 12 76% 61%;

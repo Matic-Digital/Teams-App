@@ -92,10 +92,10 @@ export default function ProfileOverview({ name, tags, tier, type, availability, 
                                 'bg-yellow-500'
                             ) : 'bg-red-500'
                         }`} />
-                        <span className="font-semibold w-[6rem]">
+                        <span className="font-semibold w-[7rem] md:w-[10rem]">
                             {availability ? (
                                 new Date(availability) <= new Date() ? 'Available Now' : 
-                                new Date(availability).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                                `Available ${new Date(availability).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`
                             ) : 'Not Available'}
                         </span>
                     </p>

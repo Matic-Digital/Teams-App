@@ -29,7 +29,7 @@ function TalentGrid({ talents, profiles }: { talents: Talent[], profiles: Profil
     <Box direction="row" wrap={true} gap={4} className="">
       {talents.map((talent) => {
         const talentProfiles = profiles.filter(p => p.talent?.sys?.id === talent.sys.id);
-        
+
         return (
           <Card key={talent.sys.id} className="h-full overflow-hidden transition-colors rounded-lg">
             <CardContent className="p-0">
@@ -45,8 +45,8 @@ function TalentGrid({ talents, profiles }: { talents: Talent[], profiles: Profil
                 <Box className="absolute bg-black/60 w-full h-full top-0 left-0 p-4 opacity-0 hover:opacity-100 transition-opacity">
                   <Box direction="col" gap={2} className="w-full justify-center">
                     {talentProfiles.map((profile) => (
-                      <Link 
-                        key={profile.sys.id} 
+                      <Link
+                        key={profile.sys.id}
                         href={`/talent/${talent.slug}/profile/${profile.slug}`}
                         className="w-full flex items-center justify-center"
                       >
@@ -64,12 +64,11 @@ function TalentGrid({ talents, profiles }: { talents: Talent[], profiles: Profil
               </Box>
             </CardContent>
             <CardHeader>
-              <CardTitle className="line-clamp-2">{talent.name}</CardTitle>
+              <CardTitle className="line-clamp-2 flex flex-col gap-2">
+                <h3>{talent.name}</h3>
+                <h4 className="text-maticgreen">{talent.primaryTitle}</h4>
+              </CardTitle>
               <CardFooter className="px-0 pt-2">
-                <div className="flex flex-col gap-1 text-xs">
-                  <div>ID: {talent.sys.id}</div>
-                  <div>Slug: {talent.slug}</div>
-                </div>
               </CardFooter>
             </CardHeader>
           </Card>
@@ -87,15 +86,19 @@ export default async function TalentPage() {
     getAllTalent(),
     getAllProfiles()
   ]);
-  
+
   return (
-    <Container>
-      <h1 className="text-4xl font-bold mb-8">Our Talent</h1>
-      <div className="mt-8">
-        <ErrorBoundary>
-          <TalentGrid talents={talents} profiles={profiles} />
-        </ErrorBoundary>
-      </div>
+    <Container className="flex flex-col gap-12">
+      <Box direction="col" gap={2} className="text-center">
+
+        <h4 className={`
+        text-maticgreen
+      `}>The team</h4>
+        <h1 className="">Meet the Team</h1>
+      </Box>
+      <ErrorBoundary>
+        <TalentGrid talents={talents} profiles={profiles} />
+      </ErrorBoundary>
     </Container>
   );
 }

@@ -58,7 +58,7 @@ export default function ProfileWorkSamples({ type, samples }: ProfileWorkSamples
                                         </Box>
                                     </Button>
                                 </DialogTrigger>
-                                <DialogContent className="backdrop-blur-md bg-[#101828]/60 fixed h-screen w-screen top-0 flex left-0 z-30">
+                                <DialogContent className="backdrop-blur-md bg-[#101828]/60 fixed h-screen w-screen top-0 flex left-0 z-50">
                                     <DialogTitle asChild>
                                         <VisuallyHidden>{workSample.sampleName}</VisuallyHidden>
                                     </DialogTitle>
@@ -95,7 +95,7 @@ export default function ProfileWorkSamples({ type, samples }: ProfileWorkSamples
                                             )}
                                         </Box>
 
-                                        <Box className="relative" direction="col">
+                                        <Box className="relative rounded-lg" direction="col">
                                             {workSample.sampleGalleryCollection?.items?.map((image, imageIndex) => {
                                                 if (!image?.url || imageIndex !== currentImageIndex) return null;
                                                 return (
@@ -105,13 +105,13 @@ export default function ProfileWorkSamples({ type, samples }: ProfileWorkSamples
                                                         alt={`${workSample.sampleName} - Image ${imageIndex + 1}`}
                                                         width={800}
                                                         height={600}
-                                                        className="w-full h-[25rem] object-contain rounded-lg"
+                                                        className="w-full aspect-[4/3] object-contain rounded-lg"
                                                     />
                                                 );
                                             })}
 
                                             {(workSample.sampleGalleryCollection?.items?.length ?? 0) > 1 && (
-                                                <div className="mt-4 overflow-x-auto">
+                                                <div className=" overflow-x-auto">
                                                     <div className="flex gap-2 justify-center min-w-0">
                                                         {workSample.sampleGalleryCollection?.items?.map((image, thumbIndex) => (
                                                             <button

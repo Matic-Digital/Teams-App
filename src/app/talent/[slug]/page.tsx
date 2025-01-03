@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Box, Container, Section } from '@/components/global/matic-ds';
 import { ErrorBoundary } from '@/components/global/ErrorBoundary';
+import { BackButton } from '@/components/ui/back-button';
 
 export const metadata: Metadata = {
     title: 'Talent',
@@ -43,34 +44,39 @@ export default async function TalentPage({ params }: PageProps) {
         );
 
         return (
-            <Section>
-                <ErrorBoundary>
-                    <Container>
-                        <Box gap={12}>
-                            <Image
-                                src={talent.headshot.url}
-                                alt={`Cover image for ${talent.name}`}
-                                height={487}
-                                width={487}
-                                className="aspect-square object-cover rounded-lg shadow-lg"
-                                priority={false}
-                            />
-                            <Box direction="col" gap={4} className="">
-                                <h4 className="">{talent.primaryTitle}</h4>
-                                <h1 className="font-semibold">{talent.name}</h1>
-                            </Box>
-                        </Box>
-                        {profile && (
-                            <Link href={`/talent/${talent.slug}/profile/${profile.slug}`} className="">
-                                <Box direction="col" gap={4} className="">
-                                    <h4 className="">{profile.profileType}</h4>
-                                    <h3 className="">{profile.role}</h3>
+            <ErrorBoundary>
+                <Container width="full">
+                    <Box className="">
+                        <BackButton href="/talent" />
+                    </Box>
+                    <Section>
+                        <Container>
+                            <Box gap={12}>
+                                <Image
+                                    src={talent.headshot.url}
+                                    alt={`Cover image for ${talent.name}`}
+                                    height={487}
+                                    width={487}
+                                    className="aspect-square object-cover rounded-lg shadow-lg"
+                                    priority={false}
+                                />
+                                <Box direction="col" gap={2} className="">
+                                    <h4 className="text-[16px] text-maticgreen">{talent.primaryTitle}</h4>
+                                    <h1 className="font-medium text-6xl">{talent.name}</h1>
+                                    {profile && (
+                                        <Link href={`/talent/${talent.slug}/profile/${profile.slug}`} className="">
+                                            <Box direction="col" gap={0} className="border border-gray-300 w-fit p-4 rounded-lg">
+                                                <h4 className="text-maticgreen">{profile.profileType}</h4>
+                                                <h3 className="">{profile.role}</h3>
+                                            </Box>
+                                        </Link>
+                                    )}
                                 </Box>
-                            </Link>
-                        )}
-                    </Container>
-                </ErrorBoundary>
-            </Section>
+                            </Box>
+                        </Container>
+                    </Section>
+                </Container>
+            </ErrorBoundary>
         );
     } catch (error) {
         console.error('Error in TalentPage:', error);

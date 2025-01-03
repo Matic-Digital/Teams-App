@@ -47,6 +47,7 @@ const TALENT_GRAPHQL_FIELDS = `
     }
     name
   }
+  primaryTitle
 `;
 
 const TIER_GRAPHQL_FIELDS = `

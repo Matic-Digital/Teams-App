@@ -11,6 +11,7 @@ export interface Talent {
   };
   name: string;
   slug: string;
+  primaryTitle: string;
   headshot: {
     url: string;
   };

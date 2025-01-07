@@ -40,7 +40,7 @@ const options = {
 export default function ProfileCareerExperience({ type, roles, markets, sectors, skills, tools, education, awards, languages, location }: ProfileCareerExperienceProps) {
     return (
         <Container id='experience' className="relative scroll-mt-20">
-            <Box direction="col" className="p-4 md:p-8 shadow-lg rounded-lg bg-white">
+            <Box gap={{ base: 4, md: 4 }} direction="col" className="p-4 md:p-8 shadow-lg rounded-lg bg-white">
                 <h1 className="flex gap-2">
                     Career
                     <span className={` 
@@ -52,7 +52,7 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                     </span>
                 </h1>
                 <Carousel>
-                    <Box className='absolute -top-12  right-8 md:right-14 h-8 w-fit'>
+                    <Box className='absolute right-8 -top-8 md:-top-10 z-30'>
                         <CarouselPrevious className='' />
                         <CarouselNext className='' />
                     </Box>
@@ -74,8 +74,12 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                         ))}
                     </CarouselContent>
                 </Carousel>
-                <div className="border-b border-[#a4a7ae] mb-4 mt-2 md:mb-6 md:mt-8"></div>
+                <div className="border-b border-[#a4a7ae] mb-10 mt-2 md:mb-6 md:mt-8"></div>
                 <Carousel>
+                    <Box className='absolute right-8 -top-8 md:-top-10 z-30 md:hidden'>
+                        <CarouselPrevious className='' />
+                        <CarouselNext className='' />
+                    </Box>
                     <CarouselContent>
                         <CarouselItem className="basis-1/3 md:basis-1/6">
                             <Box direction="col" gap={2}>
@@ -115,8 +119,12 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                         </CarouselItem>
                     </CarouselContent>
                 </Carousel>
-                <div className="border-b border-[#a4a7ae] my-4 md:mb-4 md:mt-8"></div>
+                <div className="border-b border-[#a4a7ae] mb-10 md:mb-4 md:mt-8"></div>
                 <Carousel>
+                    <Box className='absolute right-8 -top-6 md:-top-10 z-30 md:hidden'>
+                        <CarouselPrevious className='' />
+                        <CarouselNext className='' />
+                    </Box>
                     <CarouselContent>
                         <CarouselItem className="basis-1/2 md:basis-1/4">
                             <Box direction="col" gap={4}>

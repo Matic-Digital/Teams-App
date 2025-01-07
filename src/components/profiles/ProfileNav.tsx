@@ -107,7 +107,7 @@ export default function ProfileNav({ profile }: { profile: Profile }) {
     });
 
     return (
-        <Container className='sticky top-[4.5rem] z-[30]'>
+        <Container className='sticky top-[4.5rem] z-[50]'>
             <motion.div
                 variants={{
                     visible: { y: 0 },
@@ -139,7 +139,7 @@ export default function ProfileNav({ profile }: { profile: Profile }) {
                                         <DialogTitle asChild>
                                             <VisuallyHidden>{profile.name}&apos;s Rate Information</VisuallyHidden>
                                         </DialogTitle>
-                                        <div className="w-[95vw] bg-background rounded-lg p-8 relative">
+                                        <div className="w-[95vw] bg-background rounded-lg p-6 relative">
                                             <Box direction="col" gap={4} className="">
                                                 <DialogClose asChild>
                                                     <Button variant='ghost' className="absolute right-4 top-4">
@@ -162,7 +162,7 @@ export default function ProfileNav({ profile }: { profile: Profile }) {
                                                     <OverviewItem label="Team Hourly" value={'Contact Us'} color={profile.profileType} />
                                                     <OverviewItem label="Full-Time" value={'Contact Us'} color={profile.profileType} />
                                                 </Box>
-                                                <Box className="justify-between items-center">
+                                                <Box className="justify-between items-center flex-wrap gap-2">
                                                     <Button className={`
                                                         rounded-lg hover:bg-blue-100
                                                         ${profile.profileType === 'Design' ? 'bg-design-purple' : ''}

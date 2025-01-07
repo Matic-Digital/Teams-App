@@ -39,7 +39,7 @@ const options = {
 
 export default function ProfileCareerExperience({ type, roles, markets, sectors, skills, tools, education, awards, languages, location }: ProfileCareerExperienceProps) {
     return (
-        <Container id='experience' className="relative">
+        <Container id='experience' className="relative scroll-mt-20">
             <Box direction="col" className="p-4 md:p-8 shadow-lg rounded-lg bg-white">
                 <h1 className="flex gap-2">
                     Career

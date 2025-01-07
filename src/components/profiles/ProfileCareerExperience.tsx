@@ -51,7 +51,6 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                         Experience
                     </span>
                 </h1>
-                <h6 className="mb-4 mt-2 font-bold">Roles & Background</h6>
                 <Carousel>
                     <Box className='absolute -top-12  right-8 md:right-14 h-8 w-fit'>
                         <CarouselPrevious className='' />
@@ -76,7 +75,6 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                     </CarouselContent>
                 </Carousel>
                 <div className="border-b border-[#a4a7ae] mb-4 mt-2 md:mb-6 md:mt-8"></div>
-                <h6 className="mb-4">Areas of focus</h6>
                 <Carousel>
                     <CarouselContent>
                         <CarouselItem className="basis-1/3 md:basis-1/6">
@@ -118,10 +116,9 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                     </CarouselContent>
                 </Carousel>
                 <div className="border-b border-[#a4a7ae] my-4 md:mb-4 md:mt-8"></div>
-                <h6 className="mt-4">Education & other attributes</h6>
                 <Carousel>
                     <CarouselContent>
-                        <CarouselItem className="basis-4/5 md:basis-1/4">
+                        <CarouselItem className="basis-1/2 md:basis-1/4">
                             <Box direction="col" gap={4}>
                                 <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px] mt-4">Education</p>
                                 {education.map((edu, index) => (
@@ -138,7 +135,7 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                             </Box>
                         </CarouselItem>
                         {awards.length > 0 ? (
-                            <CarouselItem className="basis-3/4 md:basis-1/4">
+                            <CarouselItem className="basis-1/3 md:basis-1/4">
                                 <Box direction="col" gap={4} className="">
                                     <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px] mt-4">Awards</p>
                                     <Box direction="col" gap={2}>
@@ -153,7 +150,7 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                             </CarouselItem>
                         ) : null}
                         {languages.length > 0 ? (
-                            <CarouselItem className="basis-3/4">
+                            <CarouselItem className="basis-1/2">
                                 <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px] mb-2 mt-4">Languages</p>
                                 <Box direction="col" gap={2}>
                                     {languages.reverse().map((language, index) => (

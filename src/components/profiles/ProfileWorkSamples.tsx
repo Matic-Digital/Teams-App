@@ -109,105 +109,124 @@ export default function ProfileWorkSamples({ type, samples }: ProfileWorkSamples
                                     <DialogTitle asChild>
                                         <VisuallyHidden>{currentSample.sampleName}</VisuallyHidden>
                                     </DialogTitle>
-                                    <Container className="bg-white relative p-4 md:p-6 md:rounded-lg w-full h-full md:w-[90vw] md:max-h-[90vh] overflow-auto gap-8 flex flex-col">
-                                        <div className="absolute right-4 top-4 flex items-center">
-                                            <div className="flex items-center gap-2 mr-8">
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handlePreviousSample();
-                                                    }}
-                                                    className="bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all z-50"
-                                                    aria-label="Previous work sample"
-                                                >
-                                                    <ChevronLeftIcon className="w-6 h-6" />
-                                                </button>
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleNextSample();
-                                                    }}
-                                                    className="bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all z-50"
-                                                    aria-label="Next work sample"
-                                                >
-                                                    <ChevronRightIcon className="w-6 h-6" />
-                                                </button>
+                                    <div className="w-[90vw] h-[90vh]">
+                                        <Container className="bg-white relative p-4 md:p-6 md:rounded-lg w-full h-full flex flex-col">
+                                            <div className="absolute right-4 top-4 flex items-center z-10">
+                                                <div className="flex items-center gap-2 mr-8">
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handlePreviousSample();
+                                                        }}
+                                                        className="bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all z-50"
+                                                        aria-label="Previous work sample"
+                                                    >
+                                                        <ChevronLeftIcon className="w-6 h-6" />
+                                                    </button>
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleNextSample();
+                                                        }}
+                                                        className="bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all z-50"
+                                                        aria-label="Next work sample"
+                                                    >
+                                                        <ChevronRightIcon className="w-6 h-6" />
+                                                    </button>
+                                                </div>
+                                                <DialogClose className="text-gray-500 hover:text-gray-700 mr-4">
+                                                    <span className="sr-only">Close</span>
+                                                    ✕
+                                                </DialogClose>
                                             </div>
-                                            <DialogClose className="text-gray-500 hover:text-gray-700 mr-4">
-                                                <span className="sr-only">Close</span>
-                                                ✕
-                                            </DialogClose>
-                                        </div>
 
-                                        <Box direction={{ base: 'col', md: 'row' }} gap={{ base: 4, md: 8 }} className="justify-evenly">
-                                            <Box direction="col" gap={2} className="">
-                                                <h1 className="text-2xl font-bold">{currentSample.sampleName}</h1>
-                                                <h5 className="text-[10px] md:text-[12px] uppercase font-bold text-[#a4a7ae]">Summary</h5>
-                                                <h3 className="text-xl font-semibold">{currentSample.title}</h3>
-                                                <div className="mt-2">
-                                                    {currentSample.briefDescription?.json && (
-                                                        <Prose className="matic spaced prose max-w-prose text-base leading-7 prose-headings:font-semibold">
-                                                            {documentToReactComponents(currentSample.briefDescription.json, options)}
-                                                        </Prose>
-                                                    )}
-                                                </div>
-                                            </Box>
-
-                                            {currentSample.roleTags && currentSample.roleTags.length > 0 && (
-                                                <Box direction="col" className=" mt-12">
-                                                    <h5 className="text-[10px] md:text-[12px] uppercase font-bold text-[#a4a7ae] hidden md:flex">Tactics</h5>
-                                                    <Box direction="col" className="mt-4 gap-2">
-                                                        {currentSample.roleTags.map((tag: string, tagIndex: number) => (
-                                                            <div key={tagIndex} className="font-bold text-[10px] md:text-[12px] hidden md:flex">{tag}</div>
-                                                        ))}
-                                                    </Box>
+                                            <Box direction="col" className="h-full flex flex-col">
+                                                <Box direction="col" gap={2} className="flex-shrink-0 mb-4">
+                                                    <h1 className="text-2xl font-bold">{currentSample.sampleName}</h1>
+                                                    <h3 className="text-xl font-semibold">{currentSample.title}</h3>
                                                 </Box>
-                                            )}
-                                        </Box>
 
-                                        <Box className="relative rounded-lg" direction="col">
-                                            {currentSample.sampleGalleryCollection?.items?.map((image, imageIndex) => {
-                                                if (!image?.url || imageIndex !== currentImageIndex) return null;
-                                                return (
-                                                    <Image
-                                                        key={`${currentSample.sys.id}-${imageIndex}`}
-                                                        src={image.url}
-                                                        alt={`${currentSample.sampleName} - Image ${imageIndex + 1}`}
-                                                        width={800}
-                                                        height={600}
-                                                        className="w-full md:w-[35%] mx-auto aspect-[4/3] object-cover rounded-lg"
-                                                    />
-                                                );
-                                            })}
-                                            {(currentSample.sampleGalleryCollection?.items?.length ?? 0) > 1 && (
-                                                <div className=" overflow-x-auto">
-                                                    <div className="flex gap-4 mt-4 justify-center min-w-0">
-                                                        {currentSample.sampleGalleryCollection?.items?.map((image, thumbIndex) => (
-                                                            <button
-                                                                key={thumbIndex}
-                                                                onClick={() => setCurrentImageIndex(thumbIndex)}
-                                                                className={`relative flex-shrink-0 w-20 h-20 rounded-md overflow-hidden transition-all ${thumbIndex === currentImageIndex
-                                                                    ? 'ring-2 ring-blue-600 ring-offset-2'
-                                                                    : 'opacity-70 hover:opacity-100'
-                                                                    }`}
-                                                                aria-label={`Go to image ${thumbIndex + 1}`}
-                                                            >
-                                                                {image?.url && (
-                                                                    <Image
-                                                                        src={image.url}
-                                                                        alt={`${currentSample.sampleName} - Thumbnail ${thumbIndex + 1}`}
-                                                                        width={80}
-                                                                        height={80}
-                                                                        className="object-cover w-full h-full"
-                                                                    />
-                                                                )}
-                                                            </button>
-                                                        ))}
+                                                <Box direction={{ base: 'col', md: 'row' }} gap={8} className="flex-shrink-0 mb-6">
+                                                    <Box direction="col" className="md:w-2/3">
+                                                        <h5 className="text-[10px] md:text-[12px] uppercase font-bold text-[#a4a7ae]">Summary</h5>
+                                                        <div className="mt-2">
+                                                            {currentSample.briefDescription?.json && (
+                                                                <Prose className="matic spaced prose max-w-prose text-base leading-7 prose-headings:font-semibold">
+                                                                    {documentToReactComponents(currentSample.briefDescription.json, options)}
+                                                                </Prose>
+                                                            )}
+                                                        </div>
+                                                    </Box>
+
+                                                    {currentSample.roleTags && currentSample.roleTags.length > 0 && (
+                                                        <Box direction="col" className="md:w-1/3">
+                                                            <h5 className="text-[10px] md:text-[12px] uppercase font-bold text-[#a4a7ae]">Tactics</h5>
+                                                            <Box direction="col" className="mt-2 gap-2">
+                                                                {currentSample.roleTags.map((tag: string, tagIndex: number) => (
+                                                                    <div key={tagIndex} className="font-bold text-[10px] md:text-[12px]">{tag}</div>
+                                                                ))}
+                                                            </Box>
+                                                        </Box>
+                                                    )}
+                                                </Box>
+
+                                                <Box className="flex-1 min-h-0 flex flex-col" direction="col">
+                                                    <div className="relative flex-1 min-h-0">
+                                                        {currentSample.sampleGalleryCollection?.items && currentSample.sampleGalleryCollection.items.length > 0 ? (
+                                                            <div className="absolute inset-0 rounded-lg overflow-hidden">
+                                                                <Image
+                                                                    src={currentSample.sampleGalleryCollection.items[currentImageIndex]?.url ?? ''}
+                                                                    alt={`${currentSample.sampleName} - Image ${currentImageIndex + 1}`}
+                                                                    fill
+                                                                    className="object-contain"
+                                                                    priority={true}
+                                                                />
+                                                            </div>
+                                                        ) : currentSample.featuredImage?.url ? (
+                                                            <div className="absolute inset-0 rounded-lg overflow-hidden">
+                                                                <Image
+                                                                    src={currentSample.featuredImage.url}
+                                                                    alt={`${currentSample.sampleName} - Featured Image`}
+                                                                    fill
+                                                                    className="object-contain"
+                                                                    priority={true}
+                                                                />
+                                                            </div>
+                                                        ) : null}
                                                     </div>
-                                                </div>
-                                            )}
-                                        </Box>
-                                    </Container>
+
+                                                    {(currentSample.sampleGalleryCollection?.items?.length ?? 0) > 1 && (
+                                                        <div className="mt-4 overflow-x-auto flex-shrink-0">
+                                                            <div className="flex gap-4 justify-start min-w-0 pb-2">
+                                                                {currentSample.sampleGalleryCollection?.items?.map((image, thumbIndex) => (
+                                                                    <button
+                                                                        key={thumbIndex}
+                                                                        onClick={() => setCurrentImageIndex(thumbIndex)}
+                                                                        className={`relative flex-shrink-0 w-16 h-16 rounded-md overflow-hidden transition-all ${
+                                                                            thumbIndex === currentImageIndex
+                                                                                ? 'ring-2 ring-blue-600 ring-offset-2'
+                                                                                : 'opacity-70 hover:opacity-100'
+                                                                        }`}
+                                                                        aria-label={`Go to image ${thumbIndex + 1}`}
+                                                                    >
+                                                                        {image?.url && (
+                                                                            <Image
+                                                                                src={image.url}
+                                                                                alt={`${currentSample.sampleName} - Thumbnail ${thumbIndex + 1}`}
+                                                                                width={64}
+                                                                                height={64}
+                                                                                className="object-cover w-full h-full"
+                                                                            />
+                                                                        )}
+                                                                    </button>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </Box>
+                                            </Box>
+                                        </Container>
+                                    </div>
                                 </DialogContent>
                             </Dialog>
                         </Box>

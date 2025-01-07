@@ -60,7 +60,7 @@ const options = {
 export default function ProfileOverview({ name, tags, tier, type, availability, headshot, description, location, role, focus, level, experience, engagementType, timezone }: ProfileOverviewProps) {
     const profileLevel = level ? (levelMapping[level as LevelKey] ?? 'Unknown') : 'Unknown';
     return (
-        <Container>
+        <Container id="overview">
             <Box direction="col" className="px-4 py-6 md:p-8 shadow-lg rounded-lg bg-white">
                 <Box gap={6} className="items-center justify-between border-b border-[#a4a7ae] pb-4">
                     <h1 className="flex gap-2">

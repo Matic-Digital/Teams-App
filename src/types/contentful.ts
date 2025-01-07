@@ -329,6 +329,14 @@ export interface TechSpecification {
 }
 
 /**
+ * Type for collection responses from Contentful
+ */
+export type ContentfulCollection<T> = {
+  items: T[];
+  total: number;
+};
+
+/**
  * Raw response structure from Contentful GraphQL API
  * @template T - The type of items in the collection
  * @property data - Contains the collection if request succeeds
@@ -336,42 +344,21 @@ export interface TechSpecification {
  */
 export interface ContentfulResponse<T> {
   data?: {
-    talentCollection?: {
-      items: Talent[];
-      total: number;
-    };
-    tierCollection?: {
-      items: Tier[];
-      total: number;
-    };
-    profileCollection?: {
-      items: Profile[];
-      total: number;
-    };
-    educationCollection?: {
-      items: Education[];
-      total: number;
-    };
-    awardsCollection?: {
-      items: Awards[];
-      total: number;
-    };
-    languagesCollection?: {
-      items: Language[];
-      total: number;
-    };
-    workSamplesCollection?: {
-      items: WorkSample[];
-      total: number;
-    };
-    professionalBackgroundCollection?: {
-      items: ProfessionalBackground[];
-      total: number;
-    };
-    techSpecificationCollection?: {
-      items: TechSpecification[];
-      total: number;
-    };
+    talentCollection?: ContentfulCollection<Talent>;
+    tierCollection?: ContentfulCollection<Tier>;
+    profileCollection?: ContentfulCollection<Profile>;
+    educationCollection?: ContentfulCollection<Education>;
+    awardsCollection?: ContentfulCollection<Awards>;
+    languagesCollection?: ContentfulCollection<Language>;
+    workSamplesCollection?: ContentfulCollection<WorkSample>;
+    professionalBackgroundCollection?: ContentfulCollection<ProfessionalBackground>;
+    techSpecificationCollection?: ContentfulCollection<TechSpecification>;
   };
-  errors?: Array<{ message: string }>;
+  errors?: Array<{
+    message: string;
+    locations: Array<{
+      line: number;
+      column: number;
+    }>;
+  }>;
 }

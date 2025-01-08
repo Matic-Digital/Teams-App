@@ -35,36 +35,36 @@ export function Footer() {
           <Box direction="col" gap={4} className="items-start md:w-1/3 md:flex-grow">
             <div className="text-maticgreen text-[10px] md:text-[12px] uppercase font-bold">Who we are</div>
             <p className="text-white w-3/4">We are a business transformation agency solving the toughest brand, digital and talent challenges next generation business faces.</p>
-            <p className="text-white">See our full capabilities at <Link href="https://maticdigital.com" className="text-white font-bold">MaticDigital.com</Link></p>
+            <p className="text-white">See our full capabilities at <Link href="https://maticdigital.com" className="text-white font-bold hover:text-maticgreen">MaticDigital.com</Link></p>
             <Box gap={8}>
-              <Link href=''>
+              <Link href='' className='hover:text-maticgreen'>
                 <LinkedInIcon />
               </Link>
-              <Link href=''>
+              <Link href='' className='hover:text-maticgreen'>
                 <InstagramIcon />
               </Link>
-              <Link href=''>
+              <Link href='' className='hover:text-maticgreen'>
                 <FacebookIcon />
               </Link>
-              <Link href=''>
+              <Link href='' className='hover:text-maticgreen'>
                 <TwitterIcon />
               </Link>
             </Box>
           </Box>
           <Box direction="col" gap={4} className="items-start w-fit flex-grow">
             <div className="text-maticgreen text-[10px] md:text-[12px] uppercase font-bold">Resources</div>
-            <Link href="#" className='text-white'>Services</Link>
-            <Link href="#" className='text-white'>About</Link>
-            <Link href="#" className='text-white'>Blog</Link>
-            <Link href="#" className='text-white'>Contact</Link>
+            <Link href="#" className='text-white hover:text-maticgreen'>Services</Link>
+            <Link href="#" className='text-white hover:text-maticgreen'>About</Link>
+            <Link href="#" className='text-white hover:text-maticgreen'>Blog</Link>
+            <Link href="#" className='text-white hover:text-maticgreen'>Contact</Link>
           </Box>
           <Box direction="col" gap={4} className="items-start max-w-[45vw]">
             <div className="text-maticgreen text-[10px] md:text-[12px] uppercase font-bold">Contact</div>
-            <div className="text-white">(303) 248-6385</div>
-            <div className="font-bold text-white">hello@maticteams.com</div>
+            <div className="text-white text-lg">(720) 762-3480</div>
+            <Link href="mailto:hello@maticteams.com" className="font-bold text-white hover:text-maticgreen">hello@maticteams.com</Link>
             <div className="text-white">3456 Ringsby Court, 205 Denver, CO 80216</div>
             <Link href="#" className=''>
-              <Button>Build your team</Button>
+              <Button className="font-bold">Build your team</Button>
             </Link>
           </Box>
 

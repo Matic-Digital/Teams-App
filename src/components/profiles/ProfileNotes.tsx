@@ -68,7 +68,7 @@ export default function ProfileNotes({ type, notes }: ProfileNotesProps) {
           </Button>
           <p className="text-white">
             Questions?{' '}
-            <Link href="mailto:hello@maticteams.com" className="font-bold text-white">
+            <Link href="mailto:hello@maticteams.com" className="font-bold text-white hover:text-maticgreen">
               Get in touch
             </Link>
           </p>

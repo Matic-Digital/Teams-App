@@ -3,9 +3,9 @@ import { Box, Container } from '@/components/global/matic-ds';
 import Image from 'next/image';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS } from '@contentful/rich-text-types';
-import OverviewList from './OverviewList';
+import { OverviewList } from './OverviewList';
 
-interface ProfileOverviewProps {
+interface OverviewProps {
     name: string;
     tags: string[] | undefined;
     type: string | undefined;
@@ -57,7 +57,22 @@ const options = {
     },
 };
 
-export default function ProfileOverview({ name, tags, tier, type, availability, headshot, description, location, role, focus, level, experience, engagementType, timezone }: ProfileOverviewProps) {
+export const Overview = ({ 
+    name, 
+    tags, 
+    type, 
+    role, 
+    tier, 
+    focus, 
+    level, 
+    experience, 
+    engagementType, 
+    availability, 
+    headshot, 
+    description, 
+    location, 
+    timezone 
+}: OverviewProps) => {
     const profileLevel = level ? (levelMapping[level as LevelKey] ?? 'Unknown') : 'Unknown';
     return (
         <Container id="overview" className="scroll-mt-28">
@@ -69,6 +84,7 @@ export default function ProfileOverview({ name, tags, tier, type, availability, 
                             ${type === 'Design' ? 'text-designpurple' : ''}
                             ${type === 'Engineering' ? 'text-engblue' : ''}
                             ${type === 'Management' ? 'text-manpink' : ''}
+                            ${type === 'Strategy' ? 'text-strategygreen' : ''}
 
                         `}>
                             {name.split(' ')[0]}
@@ -92,7 +108,7 @@ export default function ProfileOverview({ name, tags, tier, type, availability, 
                                 'bg-yellow-500'
                             ) : 'bg-red-500'
                         }`} />
-                        <span className="font-semibold w-[7rem] md:w-[10rem]">
+                        <span className="font-semibold w-fit">
                             {availability ? (
                                 new Date(availability) <= new Date() ? 'Available Now' : 
                                 `Available ${new Date(availability).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`

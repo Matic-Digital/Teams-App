@@ -1,5 +1,5 @@
 import { Box } from "@/components/global/matic-ds";
-import OverviewItem from "@/components/profiles/OverviewItem";
+import { OverviewItem } from "@/components/shared/items/OverviewItem";
 
 interface OverviewListProps {
     role: string;
@@ -12,7 +12,7 @@ interface OverviewListProps {
     engagementType: ("Full-Time" | "Dedicated" | "Fractional")[] | undefined;
 }
 
-export default function OverviewList({ role, focus, tier, level, location, color, experience, engagementType}: OverviewListProps) {
+export const OverviewList = ({ role, focus, tier, level, location, color, experience, engagementType}: OverviewListProps) => {
     return (
         <Box  cols={{ sm: 2, md: 3}} className={
             `
@@ -20,6 +20,7 @@ export default function OverviewList({ role, focus, tier, level, location, color
                 ${color === 'Design' ? 'bg-designpurplebg border-designpurpleborder' : ''}
                 ${color === 'Engineering' ? 'bg-engbluebg border-engblueborder' : ''}
                 ${color === 'Management' ? 'bg-manpinkbg border-manpinkborder' : ''}
+                ${color === 'Strategy' ? 'bg-strategygreenbg border-strategygreenborder' : ''}
             `
         }>
             <OverviewItem label="Role" value={`${level} ${role}`} color={color} />

@@ -63,9 +63,8 @@ export default async function TalentPage() {
   ]);
 
   return (
-    <Container className="flex flex-col gap-12">
+    <Container className="flex flex-col gap-12 mt-24">
       <Box direction="col" gap={2} className="text-center">
-
         <h4 className={`
         text-maticgreen
       `}>The team</h4>

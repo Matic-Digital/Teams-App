@@ -7,10 +7,10 @@ import { ResourceNotFoundError } from '@/lib/errors';
 
 // Components
 import Image from 'next/image';
-import Link from 'next/link';
 import { Box, Container, Section } from '@/components/global/matic-ds';
 import { ErrorBoundary } from '@/components/global/ErrorBoundary';
 import { BackButton } from '@/components/ui/back-button';
+import { ProfileCard } from '@/components/profiles/ProfileCard';
 
 export const metadata: Metadata = {
     title: 'Talent',
@@ -50,7 +50,7 @@ export default async function TalentPage({ params }: PageProps) {
                     <Section className="">
                         <Container className="">
                             <BackButton href="/talent" />
-                            <Box gap={12}>
+                            <Box gap={12} direction={{ base: 'col', lg: 'row' }}>
                                 <Image
                                     src={talent.headshot.url}
                                     alt={`Cover image for ${talent.name}`}
@@ -65,22 +65,19 @@ export default async function TalentPage({ params }: PageProps) {
                                         <h1 className="font-medium text-6xl">{talent.name}</h1>
                                     </Box>
                                     <Box direction="row" gap={4} className="flex-wrap">
-                                        {profiles.reverse().map((profile, index) => (
-                                            <Link key={profile.slug ?? index} href={`/talent/${talent.slug}/profile/${profile.slug}`} className="hover:scale-95">
-                                                <Box direction="col" gap={0} className={`border w-fit p-4 rounded-lg
-                                                    ${profile.profileType === 'Design' ? 'border-designpurpleborder bg-designpurplebg' : ''}
-                                                    ${profile.profileType === 'Engineering' ? 'border-engblueborder bg-engbluebg' : ''}
-                                                    ${profile.profileType === 'Management' ? 'border-manpinkborder bg-manpinkbg' : ''}
-                                                `}>
-                                                    <h4 className={`
-                                                        ${profile.profileType === 'Design' ? 'text-designpurple' : ''}
-                                                        ${profile.profileType === 'Engineering' ? 'text-engblue' : ''}
-                                                        ${profile.profileType === 'Management' ? 'text-manpink' : ''}
-                                                    `}>{profile.profileType}</h4>
-                                                    <h3 className="">{profile.role}</h3>
-                                                </Box>
-                                            </Link>
-                                        ))}
+                                        {profiles.length > 0 ? profiles.reverse().map((profile, index) => (
+                                            <ProfileCard
+                                                key={profile.slug ?? index}
+                                                talentSlug={talent.slug}
+                                                profileSlug={profile.slug ?? ''}
+                                                profileType={profile.profileType}
+                                                role={profile.role ?? ''}
+                                            />
+                                        )) : (
+                                            <Box direction="col" gap={0} className="border w-fit p-4 rounded-lg text-gray-500">
+                                                <h3>No Profiles Published</h3>
+                                            </Box>
+                                        )}
                                     </Box>
                                 </Box>
                             </Box>

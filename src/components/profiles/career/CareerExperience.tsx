@@ -1,10 +1,10 @@
 import type { Awards, Education, Language, ProfessionalBackground } from "@/types";
-import { Box, Container, Prose } from "../global/matic-ds";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import { Box, Container, Prose } from "@/components/global/matic-ds";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 
-interface ProfileCareerExperienceProps {
+interface CareerExperienceProps {
     type: string;
     roles: ProfessionalBackground[];
     markets: string[] | undefined,
@@ -37,7 +37,7 @@ const options = {
     },
 };
 
-export default function ProfileCareerExperience({ type, roles, markets, sectors, skills, tools, education, awards, languages, location }: ProfileCareerExperienceProps) {
+export const CareerExperience = ({ type, roles, markets, sectors, skills, tools, education, awards, languages, location }: CareerExperienceProps) => {
     return (
         <Container id='experience' className="relative scroll-mt-20">
             <Box gap={{ base: 4, md: 4 }} direction="col" className="p-4 md:p-8 shadow-lg rounded-lg bg-white">
@@ -47,6 +47,7 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                 ${type === 'Design' ? 'text-designpurple' : ''} 
                 ${type === 'Engineering' ? 'text-engblue' : ''} 
                 ${type === 'Management' ? 'text-manpink' : ''}
+                ${type === 'Strategy' ? 'text-strategypurple' : ''}
             `}>
                         Experience
                     </span>
@@ -63,6 +64,7 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                     ${type === 'Design' ? 'bg-designpurplebg border-designpurpleborder' : ''}
                     ${type === 'Engineering' ? 'bg-engbluebg border-engblueborder' : ''}
                     ${type === 'Management' ? 'bg-manpinkbg border-manpinkborder' : ''}
+                    ${type === 'Strategy' ? 'bg-strategygreenbg border-strategygreenborder' : ''}
                 `}>
                                 <Box direction="col">
                                     <h3>{background.companyName}</h3>
@@ -81,42 +83,50 @@ export default function ProfileCareerExperience({ type, roles, markets, sectors,
                         <CarouselNext className='' />
                     </Box>
                     <CarouselContent>
-                        <CarouselItem className="basis-1/3 md:basis-1/6">
-                            <Box direction="col" gap={2}>
-                                <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Markets</p>
-                                {markets?.map((market, index) => (
-                                    <p key={index} className='font-semibold'>{market}</p>
-                                ))}
-                            </Box>
-                        </CarouselItem>
-                        <CarouselItem className="basis-1/2 md:basis-1/4">
-                            <Box direction="col" gap={2}>
-                                <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Sectors</p>
-                                {sectors?.map((sector, index) => (
-                                    <p key={index} className='font-semibold'>{sector}</p>
-                                ))}
-                            </Box>
-                        </CarouselItem>
-                        <CarouselItem className="basis-1/2 md:basis-1/4">
-                            <Box direction="col" gap={2}>
-                                <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Skills & Methods</p>
-                                <Box className="grid grid-col-1 gap-2 overflow-y-hidden">
-                                    {skills?.map((skill, index) => (
-                                        <Box className="" key={index}>
-                                            <p className='font-semibold'>{skill}</p>
-                                        </Box>
+                        {markets && markets.length > 0 && (
+                            <CarouselItem className="basis-1/3 md:basis-1/6">
+                                <Box direction="col" gap={2}>
+                                    <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Markets</p>
+                                    {markets.map((market, index) => (
+                                        <p key={index} className='font-semibold'>{market}</p>
                                     ))}
                                 </Box>
-                            </Box>
-                        </CarouselItem>
-                        <CarouselItem className="basis-1/2 md:basis-1/4">
-                            <Box direction="col" gap={2}>
-                                <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Tools</p>
-                                {tools?.map((tool, index) => (
-                                    <p key={index} className='font-semibold'>{tool}</p>
-                                ))}
-                            </Box>
-                        </CarouselItem>
+                            </CarouselItem>
+                        )}
+                        {sectors && sectors.length > 0 && (
+                            <CarouselItem className="basis-1/2 md:basis-1/4">
+                                <Box direction="col" gap={2}>
+                                    <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Sectors</p>
+                                    {sectors.map((sector, index) => (
+                                        <p key={index} className='font-semibold'>{sector}</p>
+                                    ))}
+                                </Box>
+                            </CarouselItem>
+                        )}
+                        {skills && skills.length > 0 && (
+                            <CarouselItem className="basis-1/2 md:basis-1/4">
+                                <Box direction="col" gap={2}>
+                                    <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Skills & Methods</p>
+                                    <Box className="grid grid-col-1 gap-2 overflow-y-hidden">
+                                        {skills.map((skill, index) => (
+                                            <Box className="" key={index}>
+                                                <p className='font-semibold'>{skill}</p>
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                </Box>
+                            </CarouselItem>
+                        )}
+                        {tools && tools.length > 0 && (
+                            <CarouselItem className="basis-1/2 md:basis-1/4">
+                                <Box direction="col" gap={2}>
+                                    <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Tools</p>
+                                    {tools.map((tool, index) => (
+                                        <p key={index} className='font-semibold'>{tool}</p>
+                                    ))}
+                                </Box>
+                            </CarouselItem>
+                        )}
                     </CarouselContent>
                 </Carousel>
                 <div className="border-b border-[#a4a7ae] mb-10 md:mb-4 md:mt-8"></div>

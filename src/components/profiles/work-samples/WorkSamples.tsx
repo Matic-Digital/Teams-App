@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect, type TouchEvent } from 'react';
-import { Box, Container } from '@/components/global/matic-ds';
-import { Prose } from '@/components/global/matic-ds';
+import { Box, Container, Prose } from '@/components/global/matic-ds';
 import { Button } from '@/components/ui/button';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import Image from 'next/image';
@@ -17,7 +16,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import type { WorkSample } from '@/types/contentful';
 
-interface ProfileWorkSamplesProps {
+interface WorkSamplesProps {
   type: string;
   samples: WorkSample[];
 }
@@ -36,7 +35,7 @@ const options = {
   }
 };
 
-export default function ProfileWorkSamples({ type, samples }: ProfileWorkSamplesProps) {
+export const WorkSamples = ({ type, samples }: WorkSamplesProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentSampleIndex, setCurrentSampleIndex] = useState(0);
@@ -156,7 +155,17 @@ export default function ProfileWorkSamples({ type, samples }: ProfileWorkSamples
         <Box gap={{ base: 2, md: 8 }} cols={{ base: 1, md: 2 }}>
           {[...samples].reverse().map((workSample, index) => (
             <Box key={workSample.sys.id ?? index} className="">
-              <Dialog onOpenChange={setIsDialogOpen}>
+              <Dialog
+                onOpenChange={(open) => {
+                  setIsDialogOpen(open);
+                  if (open) {
+                    // Set the current sample index to the clicked sample
+                    const reversedIndex = samples.length - 1 - index;
+                    setCurrentSampleIndex(reversedIndex);
+                    setCurrentImageIndex(0); // Reset image index when opening new sample
+                  }
+                }}
+              >
                 <DialogTrigger asChild>
                   <Button className="relative aspect-[4/3] h-full w-full overflow-hidden rounded-lg p-0 transition-all">
                     {workSample.featuredImage?.url && (
@@ -368,4 +377,4 @@ export default function ProfileWorkSamples({ type, samples }: ProfileWorkSamples
       </Box>
     </Container>
   );
-}
+};

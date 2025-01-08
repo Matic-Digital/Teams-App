@@ -371,6 +371,43 @@ async function getTalent(
   }
 }
 
+async function getTalentById(
+  id: string,
+  isDraftMode = false
+): Promise<Talent | null> {
+  try {
+    console.log('Fetching talent by id:', { id, isDraftMode });
+    
+    const query = `query GetTalentById {
+      talentCollection(where: { sys: { id: "${id}" } }, limit: 1) {
+        items {
+          ${TALENT_GRAPHQL_FIELDS}
+        }
+      }
+    }`;
+
+    console.log('GraphQL Query:', query);
+    
+    const response = await fetchGraphQL<{
+      talentCollection: {
+        items: Talent[];
+      };
+    }>(query, {}, isDraftMode);
+
+    console.log('Contentful Response:', JSON.stringify(response, null, 2));
+
+    if (!response.data?.talentCollection?.items?.length) {
+      console.log('No talent found with id:', id);
+      return null;
+    }
+
+    return response.data.talentCollection.items[0] ?? null;
+  } catch (error) {
+    console.error('Error fetching talent:', error);
+    throw error;
+  }
+}
+
 async function getAllTiers(
   isDraftMode = false
 ): Promise<Tier[]> {
@@ -1046,6 +1083,7 @@ async function getTechSpecification(
 
 export {
   getTalent,
+  getTalentById,
   getAllTalent,
   getAllTiers,
   getTier,

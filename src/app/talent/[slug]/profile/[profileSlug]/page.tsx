@@ -1,7 +1,14 @@
 import { notFound } from 'next/navigation';
-import { getTalent, getAllProfiles } from '@/lib/api';
+import { getTalent, getAllProfiles, getTalentById } from '@/lib/api';
 import { Box, Container, Section } from '@/components/global/matic-ds';
-import { getEducation, getAwards, getLanguages, getWorkSamples, getProfessionalBackground, getTechSpecification } from '@/lib/api';
+import {
+  getEducation,
+  getAwards,
+  getLanguages,
+  getWorkSamples,
+  getProfessionalBackground,
+  getTechSpecification
+} from '@/lib/api';
 import ProfileNav from '@/components/profiles/ProfileNav';
 import { Overview } from '@/components/profiles/overview/Overview';
 import ProfileNotes from '@/components/profiles/ProfileNotes';
@@ -10,6 +17,7 @@ import { CareerExperience } from '@/components/profiles/career/CareerExperience'
 import { EvalItem } from '@/components/shared/items/EvalItem';
 import { Link } from 'lucide-react';
 import { getLocationName } from '@/utils/location';
+import { MoreTeams } from '@/components/profiles/MoreTeams';
 
 interface Props {
   params: Promise<{
@@ -46,13 +54,29 @@ export default async function ProfilePage({ params }: Props) {
     const techSpecification = await getTechSpecification(talent.sys.id);
 
     // Get location names for education institutions
-    const educationWithLocations = await Promise.all(education.map(async (edu) => {
-      const locationName = await getLocationName(`${edu.location.lat}, ${edu.location.lon}`);
-      return {
-        ...edu,
-        locationName
-      };
-    }));
+    const educationWithLocations = await Promise.all(
+      education.map(async (edu) => {
+        const locationName = await getLocationName(`${edu.location.lat}, ${edu.location.lon}`);
+        return {
+          ...edu,
+          locationName
+        };
+      })
+    );
+
+    // Filter and fetch related profiles
+    const filteredProfiles = profiles.filter(
+      (p) => p.profileType === profile.profileType && p.talent?.sys.id !== talent.sys.id
+    );
+
+    const profilesWithTalent = await Promise.all(
+      filteredProfiles.map(async (p) => {
+        if (!p.talent?.sys.id) return null;
+        const profileTalent = await getTalentById(p.talent.sys.id);
+        if (!profileTalent) return null;
+        return { profile: p, talent: profileTalent };
+      })
+    );
 
     return (
       <Section className="flex flex-col gap-4">
@@ -87,46 +111,77 @@ export default async function ProfilePage({ params }: Props) {
           location={profile.talentBriefLocation}
           timezone={talentLocation}
         />
-        {workSamples.length > 0 && (
-          <WorkSamples
-            type={profile.profileType}
-            samples={workSamples}
-          />
-        )}
+        {workSamples.length > 0 && <WorkSamples type={profile.profileType} samples={workSamples} />}
         {techSpecification.length > 0 && (
           <Container id="evaluation">
-            <Box direction="col" className="p-4 md:p-8 shadow-lg rounded-lg bg-white">
+            <Box direction="col" className="rounded-lg bg-white p-4 shadow-lg md:p-8">
               {techSpecification.map((tech, index) => (
                 <Box key={index} direction="col" className="gap-2">
-                  <Box className="justify-between items-center">
-                    <h1 className="font-bold flex gap-2">
+                  <Box className="items-center justify-between">
+                    <h1 className="flex gap-2 font-bold">
                       {profile.profileType === 'Engineering' ? 'Tech' : ''}
                       {profile.profileType === 'Management' ? 'Management' : ''}
-                      <span className={`
-                              ${profile.profileType === 'Design' ? 'text-designpurple' : ''}
-                              ${profile.profileType === 'Engineering' ? 'text-engblue' : ''}
-                              ${profile.profileType === 'Management' ? 'text-manpink' : ''}
-                            `}>
+                      <span
+                        className={` ${profile.profileType === 'Design' ? 'text-designpurple' : ''} ${profile.profileType === 'Engineering' ? 'text-engblue' : ''} ${profile.profileType === 'Management' ? 'text-manpink' : ''} `}
+                      >
                         Evaluation
                       </span>
                     </h1>
-                    <Link href={tech.repo} target="_blank" className="text-foreground font-bold hover:underline flex gap-2">
+                    <Link
+                      href={tech.repo}
+                      target="_blank"
+                      className="flex gap-2 font-bold text-foreground hover:underline"
+                    >
                       View Repo
                     </Link>
                   </Box>
                   <Box direction="col" gap={2} className="my-4">
-                    <p className="uppercase font-bold text-[#a4a7ae] text-[10px] md:text-[12px]">Blended Score</p>
-                    <p className="font-semibold text-4xl">{tech.blendedScore}+</p>
+                    <p className="text-[10px] font-bold uppercase text-[#a4a7ae] md:text-[12px]">
+                      Blended Score
+                    </p>
+                    <p className="text-4xl font-semibold">{tech.blendedScore}+</p>
                   </Box>
                   <Box cols={{ base: 1, md: 2 }} gap={10} className="">
-                    <EvalItem label={tech.field1} value={tech.field1Score} desc={tech.field1Description} />
-                    <EvalItem label={tech.field2} value={tech.field2Score} desc={tech.field2Description} />
-                    <EvalItem label={tech.field3} value={tech.field3Score} desc={tech.field3Description} />
-                    <EvalItem label={tech.field4} value={tech.field4Score} desc={tech.field4Description} />
-                    <EvalItem label={tech.field5} value={tech.field5Score} desc={tech.field5Description} />
-                    <EvalItem label={tech.field6} value={tech.field6Score} desc={tech.field6Description} />
-                    <EvalItem label={tech.field7} value={tech.field7Score} desc={tech.field7Description} />
-                    <EvalItem label={tech.field8} value={tech.field8Score} desc={tech.field8Description} />
+                    <EvalItem
+                      label={tech.field1}
+                      value={tech.field1Score}
+                      desc={tech.field1Description}
+                    />
+                    <EvalItem
+                      label={tech.field2}
+                      value={tech.field2Score}
+                      desc={tech.field2Description}
+                    />
+                    <EvalItem
+                      label={tech.field3}
+                      value={tech.field3Score}
+                      desc={tech.field3Description}
+                    />
+                    <EvalItem
+                      label={tech.field4}
+                      value={tech.field4Score}
+                      desc={tech.field4Description}
+                    />
+                    <EvalItem
+                      label={tech.field5}
+                      value={tech.field5Score}
+                      desc={tech.field5Description}
+                    />
+                    <EvalItem
+                      label={tech.field6}
+                      value={tech.field6Score}
+                      desc={tech.field6Description}
+                    />
+                    <EvalItem
+                      label={tech.field7}
+                      value={tech.field7Score}
+                      desc={tech.field7Description}
+                    />
+                    <EvalItem
+                      label={tech.field8}
+                      value={tech.field8Score}
+                      desc={tech.field8Description}
+                    />
                   </Box>
                 </Box>
               ))}
@@ -145,14 +200,17 @@ export default async function ProfilePage({ params }: Props) {
           awards={awards}
           languages={languages}
         />
-        <ProfileNotes
-          type={profile.profileType}
-          notes={profile.notes}
+        <ProfileNotes type={profile.profileType} notes={profile.notes} />
+        <MoreTeams 
+          profilesWithTalent={profilesWithTalent}
         />
       </Section>
-    )
+    );
   } catch (error) {
-    console.error('Error fetching profile:', error instanceof Error ? error.message : 'Unknown error');
+    console.error(
+      'Error fetching profile:',
+      error instanceof Error ? error.message : 'Unknown error'
+    );
     return (
       <div>
         <p>Profile not found or an error occurred.</p>
